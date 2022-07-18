@@ -1,0 +1,22 @@
+{
+  "/": {
+    "hu": "fiok",
+    "ro": "cont"
+  },
+  "forgot-password": {
+    "hu": "elfelejtett-jelszo",
+    "ro": "parola-uitat"
+  },
+  "login": {
+    "hu": "bejelentkezes",
+    "ro": "autentificare"
+  },
+  "reset-password": {
+    "hu": "uj-jelszo",
+    "ro": "resetare-parola"
+  },
+  "sign-up": {
+    "hu": "regisztracio",
+    "ro": "registrare"
+  }
+}

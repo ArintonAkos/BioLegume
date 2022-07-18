@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  biolegume-frontend:
+    container_name: frontend
+    image: biolegume-frontend
+    build:
+      context: Frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./Frontend:/app/Frontend
+      - /app/Frontend/node_modules
+      - /app/Frontend/.next
+    ports:
+      - "3000:3000"
+  biolegume-backend:
+    container_name: backend
+    image: biolegume-backend
+    build: 
+      context: Backend
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:3001;https://+:3002
+      - ASPNETCORE_HTTPS_PORT=3002
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${DEV_CERT_PASSWORD}
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/aspnetapp.pfx
+    ports:
+      - '3001:3001'
+      - '3002:3002'
+    volumes:
+      - ~/.aspnet/https:/root/.aspnet/https:ro
+      - ~/AppData/Roaming/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+    
