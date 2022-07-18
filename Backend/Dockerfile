@@ -15,6 +15,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build-env /app/out .
 
-RUN dotnet dev-certs https
-
 ENTRYPOINT ["dotnet", "BioLegume.dll"]

@@ -10,7 +10,7 @@ const nextConfig = withTranslateRoutes({
   },
   trailingSlash: true,
   translateRoutes: {
-    debug: true
+    debug: false
   },
   webpackDevMiddleware: config => {
     config.watchOptions = {
