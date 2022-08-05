@@ -13,22 +13,31 @@ services:
       - /app/Frontend/.next
     ports:
       - "3000:3000"
+  biolegume-db:
+    container_name: sql-server-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      MSSQL_SA_PASSWORD: "Mssql!Passw0rd"
+      ACCEPT_EULA: "Y"
   biolegume-backend:
     container_name: backend
-    image: biolegume-backend
-    build: 
+    build:
       context: Backend
-      dockerfile: Dockerfile
+      dockerfile: ${DOCKER_FILE_NAME}
+    image: ${BACKEND_IMAGE_NAME}
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:3001;https://+:3002
-      - ASPNETCORE_HTTPS_PORT=3002
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=${DEV_CERT_PASSWORD}
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/aspnetapp.pfx
+      - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT}
+      - ASPNETCORE_URLS=${NETCORE_URLS}
+      - ASPNETCORE_HTTPS_PORT=${NETCORE_HTTPS_PORT}
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=${CERT_PATH}
     ports:
-      - '3001:3001'
-      - '3002:3002'
+      - ${BACKEND_PORT_MAPPING}
     volumes:
       - ~/.aspnet/https:/root/.aspnet/https:ro
       - ~/AppData/Roaming/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-    
+      - ${BACKEND_PROJECT_MAPPING}
+    depends_on:
+      - biolegume-db

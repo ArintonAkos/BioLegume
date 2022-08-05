@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+# ENV DOTNET_USE_POLLING_FILE_WATCHER 1
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
